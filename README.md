@@ -18,9 +18,10 @@ npm run preview
 ```
 
 Deploy the generated `dist` directory to a static host. The `/projects` page uses
-client-side routing; configure the host to serve `index.html` for that path.
-The included `public/_redirects` file provides this fallback on Netlify and
-Cloudflare Pages. Add the three `VITE_EMAILJS_*` values from
+client-side routing. The included `vercel.json` rewrite serves the app entry point
+for direct requests such as `/projects` on Vercel. The `public/_redirects` file
+provides the equivalent fallback on Netlify and Cloudflare Pages. Add the three
+`VITE_EMAILJS_*` values from
 [`.env.example`](.env.example) to the hosting environment if you want the contact
 form to send email. Without those values, the page gives visitors your direct
 email link instead. See [CONTACT_SETUP.md](CONTACT_SETUP.md) for EmailJS setup.
