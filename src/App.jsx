@@ -33,6 +33,7 @@ const projects = [
     tools: ['AWS Glue', 'PySpark', 'SQL', 'S3'],
     icon: Database,
     theme: 'project-spotify',
+    url: 'https://drive.google.com/file/d/1kFfNXZpRcX50O6Q19SqhWJ3b85gLFiFg/view',
   },
   {
     number: '02',
@@ -42,6 +43,7 @@ const projects = [
     tools: ['React.js', 'Node.js', 'MongoDB', 'Tailwind CSS'],
     icon: Layers3,
     theme: 'project-kavya',
+    url: 'https://github.com/adityamahajan785/kavya-learn',
   },
   {
     number: '03',
@@ -51,6 +53,7 @@ const projects = [
     tools: ['Java', 'Spring Boot', 'MySQL', 'JavaScript'],
     icon: ArrowUpRight,
     theme: 'project-mentee',
+    url: 'https://github.com/VaibhavKubde121/DBMS_Project',
   },
   {
     number: '04',
@@ -60,6 +63,7 @@ const projects = [
     tools: ['Java', 'Spring Boot', 'ReactJS', 'H2'],
     icon: ShoppingCart,
     theme: 'project-commerce',
+    url: 'https://github.com/VaibhavKubde121/Spring_Boot_Ecommerce_Application',
     date: 'AUG 2025',
     highlights: [
       'Built backend services with Spring Boot and an H2 in-memory database, reducing backend processing time by 40%.',
@@ -75,6 +79,7 @@ const projects = [
     tools: ['ReactJS', 'Tailwind CSS', 'Food API'],
     icon: Utensils,
     theme: 'project-food',
+    url: 'https://github.com/VaibhavKubde121/Food-Website',
     date: 'NOV 2023',
     highlights: [
       'Integrated a food API to present more than 25 food items in real time.',
@@ -90,6 +95,7 @@ const projects = [
     tools: ['HTML', 'CSS', 'JavaScript', 'Bootstrap'],
     icon: Dumbbell,
     theme: 'project-gym',
+    url: 'https://github.com/VaibhavKubde121/Webathon_2.O',
     date: 'JUNE 2023',
     highlights: [
       'Automated membership handling and class scheduling.',
@@ -202,7 +208,7 @@ function App() {
                     <div className="mentee-art all-projects-art"><div className="mentee-badge"><ProjectIcon size={20} /></div><span>{project.category}</span><strong>{project.name}</strong><div className="mentee-orbit"><i /><i /><i /></div></div>
                   </div>
                   <div className="project-info">
-                    <div className="project-kicker"><span>{project.category}</span><span>{project.date || project.number}</span></div>
+                    <div className="project-kicker"><span>{project.category}</span><span className="project-card-actions"><span>{project.date || project.number}</span><a className="project-repo-link" href={project.url} target="_blank" rel="noreferrer" aria-label={`Open ${project.name} ${project.url.includes('github.com') ? 'GitHub repository' : 'project link'}`} title={project.url.includes('github.com') ? 'View GitHub repository' : 'View project'}><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.05c-3.34.73-4.04-1.42-4.04-1.42-.55-1.39-1.33-1.76-1.33-1.76-1.09-.75.08-.74.08-.74 1.2.09 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.17 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.29-1.23 3.29-1.23.66 1.65.25 2.87.13 3.17.77.84 1.23 1.91 1.23 3.22 0 4.62-2.8 5.64-5.48 5.94.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0 0 12 .5Z" /></svg></a></span></div>
                     <h2>{project.name}</h2>
                     <p>{project.description}</p>
                     <div className="project-tools">{project.tools.map((tool) => <span key={tool}>{tool}</span>)}</div>
@@ -220,13 +226,20 @@ function App() {
 
   async function handleSubmit(event) {
     event.preventDefault()
+    const form = event.currentTarget
+    const formData = new FormData(form)
     if (!emailConfig.serviceId || !emailConfig.templateId || !emailConfig.publicKey) {
-      setFormStatus('unconfigured')
+      const subject = formData.get('subject')
+      const body = [
+        `From: ${formData.get('name')} (${formData.get('email')})`,
+        '',
+        formData.get('message'),
+      ].join('\n')
+      window.location.href = `mailto:vaibhavkubde2003@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+      setFormStatus('email')
       return
     }
 
-    const form = event.currentTarget
-    const formData = new FormData(form)
     setFormError('')
     setFormStatus('sending')
 
@@ -331,7 +344,7 @@ function App() {
                     )}
                   </div>
                   <div className="project-info">
-                    <div className="project-kicker"><span>{project.category}</span><span>{project.number}</span></div>
+                    <div className="project-kicker"><span>{project.category}</span><span className="project-card-actions"><span>{project.number}</span><a className="project-repo-link" href={project.url} target="_blank" rel="noreferrer" aria-label={`Open ${project.name} ${project.url.includes('github.com') ? 'GitHub repository' : 'project link'}`} title={project.url.includes('github.com') ? 'View GitHub repository' : 'View project'}><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.05c-3.34.73-4.04-1.42-4.04-1.42-.55-1.39-1.33-1.76-1.33-1.76-1.09-.75.08-.74.08-.74 1.2.09 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.17 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.29-1.23 3.29-1.23.66 1.65.25 2.87.13 3.17.77.84 1.23 1.91 1.23 3.22 0 4.62-2.8 5.64-5.48 5.94.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0 0 12 .5Z" /></svg></a></span></div>
                     <h3>{project.name}</h3>
                     <p>{project.description}</p>
                     <div className="project-tools">{project.tools.map((tool) => <span key={tool}>{tool}</span>)}</div>
@@ -433,8 +446,8 @@ function App() {
               </button>
               <span className={`form-feedback${formStatus === 'error' || formStatus === 'unconfigured' ? ' is-error' : ''}`} role="status" aria-live="polite">
                 {formStatus === 'sent' && "Thanks for reaching out. I'll be in touch soon."}
+                {formStatus === 'email' && <>Your email app should open with your message ready. If it doesn&apos;t, <a href="mailto:vaibhavkubde2003@gmail.com">email me directly</a>.</>}
                 {formStatus === 'error' && <>{formError}<a href="mailto:vaibhavkubde2003@gmail.com">email me directly</a>.</>}
-                {formStatus === 'unconfigured' && <>Email delivery is not configured. Please <a href="mailto:vaibhavkubde2003@gmail.com">email me directly</a>.</>}
               </span>
             </div>
           </form>
